@@ -8,6 +8,12 @@ export async function sendVerificationEmail(
   verifyCode: string
 ): Promise<ApiResponse> { // promisc which gets returned is in the format of api response
   try { // main logic of function
+    await resend.emails.send({
+      from: 'you@example.com',
+      to: email,
+      subject: "Anonymail Verification Code",
+      react: VerificationEmail({username, otp: verifyCode})
+    })
     return { success: true, message: "Verification Email sent Successfully"}
   } catch (emailError) { // error handling when an error occurs in try block 
     console.error("Error sending verification email", emailError)
